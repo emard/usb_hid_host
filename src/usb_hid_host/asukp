@@ -47,10 +47,10 @@ if ($BRAM) {			# use BRAM
 module usb_hid_host_rom(
 \tinput wire clk,
 \tinput wire [13:0] adr,
-\toutput reg [4:0] data);
-\treg [4:0] mem [0:$size];
+\toutput reg [7:0] data);
+\treg [7:0] mem [0:$size];
 \tinitial \$readmemh("usb_hid_host_rom.hex", mem);
-\talways @(posedge clk) data <= mem[adr[9:0]];
+\talways @(posedge clk) data <= mem[adr];
 endmodule
 EOF
 close(DST);
@@ -141,7 +141,7 @@ sub getline {
 
 sub putline {
 	if ($BRAM) {
-		printf "%01x\n", shift(@_);
+		printf "%02x\n", shift(@_);
 		$pc++;
 	} else {
 		printf "\t\t\t10'h%03x: data = 4'h%x;%s\n", $pc++, shift(@_), $scd;
