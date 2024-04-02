@@ -37,6 +37,7 @@ wire usb_report, usb_conerr, game_l, game_r, game_u, game_d, game_a, game_b, gam
 wire game_sel, game_sta;
 wire [13:0] dbg_pc;
 wire [3:0] dbg_inst;
+wire usb_oe, usb_dm_i, usb_dp_i, usb_dm_o, usb_dp_o;
 
 assign usb_fpga_pu_dn = 1'b0; // host pull down 10k
 assign usb_fpga_pu_dp = 1'b0; // host pull down 10k
@@ -68,7 +69,9 @@ assign clk_usb = clocks2[0];
 
 usb_hid_host usb (
     .usbclk(clk_usb), .usbrst_n(sys_resetn),
-    .usb_dm(usb_fpga_bd_dn), .usb_dp(usb_fpga_bd_dp),
+    .usb_oe(usb_oe),
+    .usb_dm_i(usb_dm_i), .usb_dp_i(usb_dp_i),
+    .usb_dm_o(usb_dm_o), .usb_dp_i(usb_dp_o),
     .typ(usb_type), .report(usb_report),
     .key_modifiers(key_modifiers), .key1(key1), .key2(key2), .key3(key3), .key4(key4),
     .mouse_btn(mouse_btn), .mouse_dx(mouse_dx), .mouse_dy(mouse_dy),
@@ -77,6 +80,10 @@ usb_hid_host usb (
     .game_sel(game_sel), .game_sta(game_sta),
     .conerr(usb_conerr), .dbg_hid_report(hid_report)
 );
+assign usb_dm_i = usb_fpga_bd_dn;
+assign usb_dp_i = usb_fpga_bd_dp;
+assign usb_fpga_bd_dn = usb_oe ? usb_dm_o : 1'bZ;
+assign usb_fpga_bd_dp = usb_oe ? usb_dp_o : 1'bZ;
 
 hid_printer prt (
     .clk(clk_usb), .resetn(sys_resetn),

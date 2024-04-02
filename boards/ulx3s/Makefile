@@ -32,7 +32,7 @@ $(SRC)/usb_hid_host_rom_random.v: $(SRC)/usb_hid_host_rom.v $(SRC)/usb_hid_host_
 	if ! cmp $(SRC)/usb_hid_host_rom_random_new.v $(SRC)/usb_hid_host_rom_random.v; then cp $(SRC)/usb_hid_host_rom_random_new.v $(SRC)/usb_hid_host_rom_random.v; fi
 
 $(SRC)/usb_hid_host_rom_random.hex: $(SRC)/usb_hid_host_rom.hex
-	ecpbram --width 4 --depth $(ROMDEPTH512) --seed 0 --generate $(SRC)/usb_hid_host_rom_random_new.hex
+	ecpbram --width 8 --depth $(ROMDEPTH512) --seed 0 --generate $(SRC)/usb_hid_host_rom_random_new.hex
 	if ! cmp $(SRC)/usb_hid_host_rom_random_new.hex $(SRC)/usb_hid_host_rom_random.hex; then cp $(SRC)/usb_hid_host_rom_random_new.hex $(SRC)/usb_hid_host_rom_random.hex; fi
 
 $(TOP).json: $(OBJS)
