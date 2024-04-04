@@ -73,6 +73,7 @@ usb_hid_host usb (
     .usb_dm_i(usb_dm_i), .usb_dp_i(usb_dp_i),
     .usb_dm_o(usb_dm_o), .usb_dp_i(usb_dp_o),
     .typ(usb_type), .report(usb_report),
+    .update_leds_stb(btn[2]), .leds(btn[6:3]),
     .key_modifiers(key_modifiers), .key1(key1), .key2(key2), .key3(key3), .key4(key4),
     .mouse_btn(mouse_btn), .mouse_dx(mouse_dx), .mouse_dy(mouse_dy),
     .game_l(game_l), .game_r(game_r), .game_u(game_u), .game_d(game_d),
@@ -80,6 +81,7 @@ usb_hid_host usb (
     .game_sel(game_sel), .game_sta(game_sta),
     .conerr(usb_conerr), .dbg_hid_report(hid_report)
 );
+
 assign usb_dm_i = usb_fpga_bd_dn;
 assign usb_dp_i = usb_fpga_bd_dp;
 assign usb_fpga_bd_dn = usb_oe ? usb_dm_o : 1'bZ;
