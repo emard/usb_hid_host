@@ -75,7 +75,7 @@ usb_hid_host usb (
     /*
     .usb_oe(usb_oe),
     .usb_dm_i(usb_dm_i), .usb_dp_i(usb_dp_i),
-    .usb_dm_o(usb_dm_o), .usb_dp_i(usb_dp_o),
+    .usb_dm_o(usb_dm_o), .usb_dp_o(usb_dp_o),
     .update_leds_stb(btn[2]), .leds(btn[6:3]),
     */
     .typ(usb_type), .report(usb_report),
