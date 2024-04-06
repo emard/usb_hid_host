@@ -70,14 +70,14 @@ assign clk_usb = clocks2[0];
 usb_hid_host usb (
     .usbclk(clk_usb), .usbrst_n(sys_resetn),
     // revert-before-kbd-leds.sh
+    /*
     .usb_dm(usb_fpga_bd_dn),
     .usb_dp(usb_fpga_bd_dp),
-    /*
-    .usb_oe(usb_oe),
+    */
     .usb_dm_i(usb_dm_i), .usb_dp_i(usb_dp_i),
     .usb_dm_o(usb_dm_o), .usb_dp_o(usb_dp_o),
+    .usb_oe(usb_oe),
     .update_leds_stb(btn[2]), .leds(btn[6:3]),
-    */
     .typ(usb_type), .report(usb_report),
     .key_modifiers(key_modifiers), .key1(key1), .key2(key2), .key3(key3), .key4(key4),
     .mouse_btn(mouse_btn), .mouse_dx(mouse_dx), .mouse_dy(mouse_dy),
@@ -86,12 +86,12 @@ usb_hid_host usb (
     .game_sel(game_sel), .game_sta(game_sta),
     .conerr(usb_conerr), .dbg_hid_report(hid_report)
 );
-/*
-assign usb_dm_i = usb_fpga_bd_dn;
-assign usb_dp_i = usb_fpga_bd_dp;
+
 assign usb_fpga_bd_dn = usb_oe ? usb_dm_o : 1'bZ;
 assign usb_fpga_bd_dp = usb_oe ? usb_dp_o : 1'bZ;
-*/
+assign usb_dm_i = usb_fpga_bd_dn;
+assign usb_dp_i = usb_fpga_bd_dp;
+
 hid_printer prt (
     .clk(clk_usb), .resetn(sys_resetn),
     .uart_tx(ftdi_rxd), .usb_type(usb_type), .usb_report(usb_report),
