@@ -50,7 +50,7 @@ module usb_hid_host_rom(
 \toutput reg [4:0] data);
 \treg [7:0] mem [0:$size];
 \tinitial \$readmemh("usb_hid_host_rom.hex", mem);
-\talways @(posedge clk) data <= mem[adr];
+\talways @(posedge clk) data <= mem[adr][4:0];
 endmodule
 EOF
 close(DST);
