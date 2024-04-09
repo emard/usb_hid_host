@@ -89,8 +89,8 @@ usb_hid_host usb (
 
 assign usb_fpga_bd_dn = usb_oe ? usb_dm_o : 1'bZ;
 assign usb_fpga_bd_dp = usb_oe ? usb_dp_o : 1'bZ;
-assign usb_dm_i = usb_fpga_bd_dn;
-assign usb_dp_i = usb_fpga_bd_dp;
+assign usb_dm_i       = usb_oe ? 1'b0     : usb_fpga_bd_dn;
+assign usb_dp_i       = usb_oe ? 1'b0     : usb_fpga_bd_dp;
 
 hid_printer prt (
     .clk(clk_usb), .resetn(sys_resetn),
